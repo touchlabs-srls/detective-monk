@@ -18,7 +18,7 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", inline: <<-SHELL
     # Prepare environment
     mkdir -p /opt/monk/input
-    mkdir -p /opt/monk/input
+    mkdir -p /opt/monk/output
 
     export DEBIAN_FRONTEND=noninteractive
 
