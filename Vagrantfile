@@ -25,6 +25,12 @@ Vagrant.configure("2") do |config|
     # Configure timezone
     cp /usr/share/zoneinfo/Europe/Rome /etc/localtime
 
+    # Needed libraries
+    # https://gist.github.com/winuxue/cfef08e2f5fe9dfc16a1d67a4ad38a01?permalink_comment_id=4116618#gistcomment-4116618
+    apt-get update
+    apt-get install -y apt install -y libx11-xcb1 libxcomposite1 libxcursor1 libxdamage1 libxi-dev libxtst-dev libnss3 \
+        libcups2 libxss1 libxrandr2 libasound2 libatk1.0-0 libatk-bridge2.0-0 libpangocairo-1.0-0 libgtk-3-0 libgbm1
+
     # Utilities
     apt-get install -y lnav silversearcher-ag git curl
 
@@ -34,6 +40,9 @@ Vagrant.configure("2") do |config|
 
     # EDPS Website Evidence Collector
     npm install -g https://github.com/EU-EDPS/website-evidence-collector/tarball/latest
+    # Fix links
+    ln -s /usr/lib/node_modules/website-evidence-collector/assets /usr/lib/node_modules/website-evidence-collector/bin/assets
+    ln -s /usr/lib/node_modules/website-evidence-collector/assets/wec_logo.svg /usr/lib/node_modules/website-evidence-collector/bin/wec_logo.svg
 
     # OVH Website Evidence Collector Batch
     git clone https://github.com/ovh/website-evidence-collector-batch.git /opt/monk/website-evidence-collector-batch
