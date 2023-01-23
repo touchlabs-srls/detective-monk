@@ -14,6 +14,7 @@ Vagrant.configure("2") do |config|
   config.vm.hostname = "monk"
   config.vm.synced_folder "input", "/opt/monk/input"
   config.vm.synced_folder "output", "/opt/monk/output"
+  config.vm.synced_folder "bin", "/usr/local/bin"
 
   config.vm.provision "shell", inline: <<-SHELL
     # Prepare environment

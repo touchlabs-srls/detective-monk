@@ -12,3 +12,7 @@
 *.box
 
 # End of https://www.toptal.com/developers/gitignore/api/vagrant
+
+input/config.yml
+input/cookies.txt
+output/

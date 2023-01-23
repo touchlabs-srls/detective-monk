@@ -1,0 +1,14 @@
+workers: 4                                            # (optional) number of concurrency workers (default is CPUs count)
+dnt: true                                             # (optional) Set Do-Not-Track (default is false)
+firstPartyUri: 'https://ovhcloud.com/fr/'             # (required) First Party URI
+urls:                                                 # (required/optional) List of URLs to grab
+  - 'https://ovhcloud.com/fr/'                        # The first element MUST be equal to "firstPartyUri", even when using a sitemap
+  - 'https://ovhcloud.com/fr/url2'
+sitemaps:                                             # (required/optional) Sitemaps list containing URLs to grab (can be files or urls)
+  - url: 'https://ovhcloud.com/fr/sitemap.xml'
+    exclude: '/^exclude/these/url$/'
+
+# Do not edit, these values will be overridden:
+output: '/opt/monk/output'                            # (required) Path to the output folder
+setCookie: /opt/monk/input/cookies.txt                # (optional) --set-cookie option to be passed to website-evidence-collector
+                                                      # see https://github.com/EU-EDPS/website-evidence-collector/blob/master/FAQ.md#how-do-i-gather-evidence-with-given-consent 
