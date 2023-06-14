@@ -36,7 +36,7 @@ follows the [website-evidence-collector-batch][wecb] format.
 
 If you need to set up a cookie jar, add it to `input/cookies.txt`.
 
-Finally, run the collection by calling the  `monk` wrapper script.
+Finally, run the collection by calling the `monk` wrapper script.
 
 ```sh
 vagrant ssh -c monk
