@@ -46,7 +46,7 @@ Vagrant.configure("2") do |config|
     apt-get install -y nodejs
 
     # EDPS Website Evidence Collector
-    npm install -g https://github.com/EU-EDPS/website-evidence-collector/tarball/latest
+    npm install -g https://github.com/EU-EDPS/website-evidence-collector/tarball/46aa28674bd325cc0ad46d895db8621a393f5998
     # Fix links
     ln -s /usr/lib/node_modules/website-evidence-collector/assets /usr/lib/node_modules/website-evidence-collector/bin/assets
     ln -s /usr/lib/node_modules/website-evidence-collector/assets/wec_logo.svg /usr/lib/node_modules/website-evidence-collector/bin/wec_logo.svg
