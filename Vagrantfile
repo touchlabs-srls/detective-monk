@@ -54,5 +54,10 @@ Vagrant.configure("2") do |config|
     # OVH Website Evidence Collector Batch
     git clone https://github.com/ovh/website-evidence-collector-batch.git /opt/monk/website-evidence-collector-batch
     cd /opt/monk/website-evidence-collector-batch && npm install && npm link
+
+    # Extend timeout (needed for some websites)
+    TIMEOUT=90000
+    sed -s -i "s/30000/$TIMEOUT/g" /opt/monk/website-evidence-collector-batch/src/index.js
+    sed -s -i "s/30000/$TIMEOUT/g" /opt/monk/website-evidence-collector-batch/src/lib/urls.js
   SHELL
 end
