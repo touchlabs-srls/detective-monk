@@ -31,6 +31,9 @@ echo "" >> config.yml
 echo "output: '/opt/monk/output/$TIMESTAMP'" >> config.yml
 echo "setCookie: '$LOCATION/cookies.txt'" >> config.yml
 
+# Disable SSL error checks
+export NODE_TLS_REJECT_UNAUTHORIZED=0
+
 # Start collection
 echo ""
 echo "[*] Starting report generation..."
