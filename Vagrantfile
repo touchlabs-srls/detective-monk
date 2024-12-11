@@ -37,6 +37,9 @@ Vagrant.configure("2") do |config|
     # Utilities
     apt-get install -y lnav silversearcher-ag git curl
 
+    # Chromium (needed for ARM64 support)
+    apt-get install -y chromium-browser
+
     # Node 16
     mkdir -p /etc/apt/keyrings
     curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
