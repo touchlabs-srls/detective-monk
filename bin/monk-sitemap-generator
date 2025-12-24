@@ -1,0 +1,56 @@
+#!/bin/bash
+
+set -e
+
+echo "  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄"
+echo "  ██░▄▀▄░█▀▄▄▀█░▄▄▀█░█▀██"
+echo "  ██░█░█░█░██░█░██░█░▄▀██"
+echo "  ██░███░██▄▄██▄██▄█▄█▄██"
+echo "  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀"
+echo "Developed by Touchlabs SRLs"
+
+URL="$1"
+
+TIMESTAMP="$(date +%Y-%m-%d_%H%M%S)"
+LOCATION="/tmp/monk_sitemap_$TIMESTAMP"
+
+# Set up configuration directory
+echo ""
+echo "[*] Generating configuration..."
+
+mkdir -p $LOCATION
+cd $LOCATION
+
+# Find the website domain from the given URL
+DOMAIN=$(echo $URL | sed 's|.*://||' | sed 's|/.*$||' | tr -d '\r')
+
+FILENAME="config-$DOMAIN.yml"
+
+OUTPUTFILE="/opt/monk/input/$FILENAME"
+
+# Start sitemap generation
+echo ""
+echo "[*] Starting sitemap generation..."
+sitemap-generator -v "$URL"
+
+# Convert URL list to config file
+CONFIGFILE="config.yml"
+echo "workers: 4" > $CONFIGFILE
+echo "dnt: false" >> $CONFIGFILE
+echo "firstPartyUri: $URL" >> $CONFIGFILE
+echo "urls:" >> $CONFIGFILE
+echo "- $URL" >> $CONFIGFILE
+cat sitemap.xml | scrape -e "//loc/text()" | while read line; do
+    echo "-" "$line" >> $CONFIGFILE
+done
+echo "# Do not edit, these values will be overridden:" >> $CONFIGFILE
+echo "output: '/opt/monk/output'" >> $CONFIGFILE
+echo "setCookie: /opt/monk/input/cookies.txt" >> $CONFIGFILE
+cp "$CONFIGFILE" "$OUTPUTFILE"
+
+echo ""
+echo "[*] Process completed!"
+echo "    Config file location: input/$FILENAME"
+
+# Clean up
+rm -rf "$LOCATION"

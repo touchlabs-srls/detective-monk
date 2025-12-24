@@ -64,6 +64,11 @@ Vagrant.configure("2") do |config|
     /usr/lib/node_modules/website-evidence-collector/node_modules/.bin/puppeteer browsers install chrome
     chown -R vagrant:vagrant /home/vagrant/.cache
 
+    # Install sitemap tools
+    npm install -g sitemap-generator-cli
+    apt-get install -y python3-pip
+    pip install scrape-cli --break-system-packages
+
     echo ""
     echo "Monk VM provisioning completed!"
   SHELL
