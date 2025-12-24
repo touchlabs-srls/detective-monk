@@ -9,7 +9,7 @@ echo "  ██░███░██▄▄██▄██▄█▄█▄██"
 echo "  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀"
 echo "Developed by Touchlabs SRLs"
 
-TIMESTAMP="$(date +%Y-%m-%d_%H%M%S.%4N)"
+TIMESTAMP="$(date +%Y-%m-%d_%H%M%S)"
 LOCATION="/tmp/monk_$TIMESTAMP"
 
 # Set up configuration directory
@@ -26,9 +26,19 @@ cp /opt/monk/input/cookies.txt . 2>/dev/null || touch cookies.txt
 sed "s_^output:.*__" -i config.yml
 sed "s_^setCookie:.*__" -i config.yml
 
+# Find the website domain from the config file firstPartyUri
+DOMAIN=$(grep 'firstPartyUri:' config.yml | sed 's|.*://||' | sed 's|/.*$||' | tr -d '\r')
+if [ -n "$DOMAIN" ]; then
+  SUFFIX="-$DOMAIN"
+else
+  SUFFIX=""
+fi
+
+OUTPUTDIR="${TIMESTAMP}${SUFFIX}"
+
 # Add new values for output: and setCookie:
 echo "" >> config.yml
-echo "output: '/opt/monk/output/$TIMESTAMP'" >> config.yml
+echo "output: '/opt/monk/output/$OUTPUTDIR'" >> config.yml
 echo "setCookie: '$LOCATION/cookies.txt'" >> config.yml
 
 # Disable SSL error checks
@@ -37,12 +47,12 @@ export NODE_TLS_REJECT_UNAUTHORIZED=0
 # Start collection
 echo ""
 echo "[*] Starting report generation..."
-echo "    Report location: output/$TIMESTAMP"
+echo "    Report location: output/$OUTPUTDIR"
 website-evidence-collector-batch --config="$LOCATION/config.yml"
 
 echo ""
 echo "[*] Process completed!"
-echo "    Report location: output/$TIMESTAMP"
+echo "    Report location: output/$OUTPUTDIR"
 
 # Clean up
 rm -rf "$LOCATION"
